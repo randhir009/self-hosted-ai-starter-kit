@@ -22,7 +22,7 @@ x-n8n: &service-n8n
     - N8N_USER_MANAGEMENT_JWT_SECRET=${N8N_USER_MANAGEMENT_JWT_SECRET}
     - N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE=true
     - N8N_DEFAULT_BINARY_DATA_MODE=${N8N_DEFAULT_BINARY_DATA_MODE}
-    - WEBHOOK_URL=https://harbourless-rosalba-dicrotic.ngrok-free.dev
+    - WEBHOOK_URL=${NGROK_WEBHOOK_URL}
     - OLLAMA_HOST=${OLLAMA_HOST:-ollama:11434}
   volumes:
     - "D:/n8n_data:/home/node/.n8n"
@@ -160,3 +160,4 @@ services:
     image: ollama/ollama:rocm
     depends_on:
       - ollama-gpu-amd
+

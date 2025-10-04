@@ -1,3 +1,5 @@
+version: "3.8"
+
 volumes:
   n8n_storage:
   postgres_storage:
@@ -5,11 +7,12 @@ volumes:
   qdrant_storage:
 
 networks:
-  demo:
+  n8n_network:
 
+# Base service template for n8n containers
 x-n8n: &service-n8n
   image: n8nio/n8n:latest
-  networks: ["demo"]
+  networks: ["n8n_network"]
   environment:
     - DB_TYPE=postgresdb
     - DB_POSTGRESDB_HOST=postgres
@@ -28,19 +31,21 @@ x-n8n: &service-n8n
     - path: .env
       required: true
 
+# Base template for Ollama services
 x-ollama: &service-ollama
   image: ollama/ollama:latest
   container_name: ollama
-  networks: ["demo"]
+  networks: ["n8n_network"]
   restart: unless-stopped
   ports:
     - 11434:11434
   volumes:
     - ollama_storage:/root/.ollama
 
+# Template for initial Ollama model pull
 x-init-ollama: &init-ollama
   image: ollama/ollama:latest
-  networks: ["demo"]
+  networks: ["n8n_network"]
   container_name: ollama-pull-llama
   volumes:
     - ollama_storage:/root/.ollama
@@ -55,7 +60,7 @@ services:
   postgres:
     image: postgres:16-alpine
     hostname: postgres
-    networks: ["demo"]
+    networks: ["n8n_network"]
     restart: unless-stopped
     environment:
       - POSTGRES_USER
@@ -110,7 +115,7 @@ services:
     image: qdrant/qdrant
     hostname: qdrant
     container_name: qdrant
-    networks: ["demo"]
+    networks: ["n8n_network"]
     restart: unless-stopped
     ports:
       - 6333:6333
@@ -163,7 +168,7 @@ services:
     image: ngrok/ngrok:latest
     hostname: ngrok
     container_name: ngrok
-    networks: ["demo"]
+    networks: ["n8n_network"]
     restart: unless-stopped
     environment:
       - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}

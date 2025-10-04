@@ -180,3 +180,14 @@ services:
         condition: service_started
     ports:
       - 4040:4040
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    networks: ["n8n_network"]
+    restart: unless-stopped
+    ports:
+      - 11434:11434
+    volumes:
+      - ollama_storage:/root/.ollama
+

@@ -181,7 +181,7 @@ services:
     ports:
       - 4040:4040
 
-  ollama:
+    ollama:
     image: ollama/ollama:latest
     container_name: ollama
     networks: ["n8n_network"]
@@ -190,4 +190,14 @@ services:
       - 11434:11434
     volumes:
       - ollama_storage:/root/.ollama
+    command: >
+      bash -c "
+        sleep 5 &&
+        echo '🔄 Pulling model: llama3...' &&
+        ollama pull llama3 &&
+        echo '✅ Model llama3 ready, starting Ollama server...' &&
+        exec ollama serve
+      "
+
+
 

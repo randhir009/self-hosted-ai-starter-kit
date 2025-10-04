@@ -194,10 +194,11 @@ services:
       bash -c "
         sleep 5 &&
         echo '🔄 Pulling model: llama3...' &&
-        ollama pull llama3 &&
-        echo '✅ Model llama3 ready, starting Ollama server...' &&
+        ollama pull llama3.2:latest &&
+        echo '✅ Model llama3.2 ready, starting Ollama server...' &&
         exec ollama serve
       "
+
 
 
 

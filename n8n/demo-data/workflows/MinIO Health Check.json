@@ -1,0 +1,61 @@
+{
+  "name": "MinIO Health Check",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7be2370b-64b3-4488-af52-00bd66c5e7d1",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        656,
+        -240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=http://minio:9000/minio/health/live",
+        "options": {
+          "response": {
+            "response": {
+              "fullResponse": true
+            }
+          }
+        }
+      },
+      "id": "04e9842d-1c76-440f-a951-c9440c8ab253",
+      "name": "Check MinIO",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [
+        928,
+        -240
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Check MinIO",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "c226fefc-87e7-418d-9614-719b7a99161c",
+  "meta": {
+    "instanceId": "0ab7f6f30f51752436a2f95b4bd0b49172029cff1f2188a03ec0028b81cef4c8"
+  },
+  "id": "JCqv8AdQtyOAoxRq",
+  "tags": []
+}

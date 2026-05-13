@@ -1,0 +1,66 @@
+{
+  "name": "Browserless",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cc4bbd3b-ab26-4824-8511-fe31596e797d",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://browserless:3000/screenshot?token=2UVZ9WmbzCIe9wycc701d85bc7100457346fcf725f9b9c790",
+        "sendBody": true,
+        "contentType": "=json",
+        "specifyBody": "json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "{\n  \"url\": \"https://example.com\",\n  \"options\": {\n    \"fullPage\": true,\n    \"type\": \"png\"\n  }\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "3df6b0d8-4df5-459f-907b-e0c2d2e84313",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "66bbb772-1295-453d-b92e-b08a4d8ca2b5",
+  "meta": {
+    "instanceId": "0ab7f6f30f51752436a2f95b4bd0b49172029cff1f2188a03ec0028b81cef4c8"
+  },
+  "id": "R5l0XD6UHqjFExng",
+  "tags": []
+}

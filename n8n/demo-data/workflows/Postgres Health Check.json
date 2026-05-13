@@ -1,0 +1,63 @@
+{
+  "name": "Postgres Health Check",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "db2693a8-d953-4d5c-845f-5ae5e69fa464",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT 1 AS ok;",
+        "options": {}
+      },
+      "id": "9284e258-c687-4344-908b-5ee4bc03cdb7",
+      "name": "Check Postgres",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2,
+      "position": [
+        272,
+        0
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "cfLBGbxC6zS02zhm",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Check Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "02cfbc7c-c605-464c-bbe7-123f8d5b7f3c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0ab7f6f30f51752436a2f95b4bd0b49172029cff1f2188a03ec0028b81cef4c8"
+  },
+  "id": "M7CIZLzDHIg9qfv6",
+  "tags": []
+}

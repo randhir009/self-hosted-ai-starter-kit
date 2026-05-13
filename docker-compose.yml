@@ -40,12 +40,23 @@ services:
       N8N_PERSONALIZATION_ENABLED: "false"
       N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE: "true"
       N8N_DEFAULT_BINARY_DATA_MODE: ${N8N_DEFAULT_BINARY_DATA_MODE}
-      OLLAMA_HOST: http://ollama:11434
-      CRAWL4AI_HOST: http://crawl4ai:11235
-      BROWSERLESS_URL: http://browserless:3000
-      HTTP_PROXY: http://squid:3128
-      HTTPS_PROXY: http://squid:3128
-      NO_PROXY: localhost,127.0.0.1,n8n,postgres,ollama,qdrant,crawl4ai,browserless,minio,squid
+      WEBHOOK_URL: ${WEBHOOK_URL}
+      N8N_EDITOR_BASE_URL: ${N8N_EDITOR_BASE_URL}
+      N8N_HOST: ${N8N_HOST}
+      N8N_PORT: ${N8N_PORT}
+      N8N_PROTOCOL: ${N8N_PROTOCOL}
+      N8N_PROXY_HOPS: ${N8N_PROXY_HOPS}
+      NODE_ENV: ${NODE_ENV}
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
+      OLLAMA_HOST: ${OLLAMA_HOST}
+      CRAWL4AI_HOST: ${CRAWL4AI_HOST}
+      BROWSERLESS_URL: ${BROWSERLESS_URL}
+      QDRANT_URL: ${QDRANT_URL}
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_PORT: ${MINIO_PORT}
+      HTTP_PROXY: ${HTTP_PROXY}
+      HTTPS_PROXY: ${HTTPS_PROXY}
+      NO_PROXY: ${NO_PROXY}
     entrypoint: /bin/sh
     command:
       - -c
@@ -86,16 +97,25 @@ services:
       N8N_PERSONALIZATION_ENABLED: "false"
       N8N_COMMUNITY_PACKAGES_ALLOW_TOOL_USAGE: "true"
       N8N_DEFAULT_BINARY_DATA_MODE: ${N8N_DEFAULT_BINARY_DATA_MODE}
-      OLLAMA_HOST: http://ollama:11434
-      CRAWL4AI_HOST: http://crawl4ai:11235
-      BROWSERLESS_URL: http://browserless:3000
-      HTTP_PROXY: http://squid:3128
-      HTTPS_PROXY: http://squid:3128
-      NO_PROXY: localhost,127.0.0.1,n8n,postgres,ollama,qdrant,crawl4ai,browserless,minio,squid
-      MINIO_ENDPOINT: minio
-      MINIO_PORT: 9000
+      WEBHOOK_URL: ${WEBHOOK_URL}
+      N8N_EDITOR_BASE_URL: ${N8N_EDITOR_BASE_URL}
+      N8N_HOST: ${N8N_HOST}
+      N8N_PORT: ${N8N_PORT}
+      N8N_PROTOCOL: ${N8N_PROTOCOL}
+      N8N_PROXY_HOPS: ${N8N_PROXY_HOPS}
+      NODE_ENV: ${NODE_ENV}
+      GENERIC_TIMEZONE: ${GENERIC_TIMEZONE}
+      OLLAMA_HOST: ${OLLAMA_HOST}
+      CRAWL4AI_HOST: ${CRAWL4AI_HOST}
+      BROWSERLESS_URL: ${BROWSERLESS_URL}
+      QDRANT_URL: ${QDRANT_URL}
+      MINIO_ENDPOINT: ${MINIO_ENDPOINT}
+      MINIO_PORT: ${MINIO_PORT}
       MINIO_ACCESS_KEY: ${MINIO_ROOT_USER}
       MINIO_SECRET_KEY: ${MINIO_ROOT_PASSWORD}
+      HTTP_PROXY: ${HTTP_PROXY}
+      HTTPS_PROXY: ${HTTPS_PROXY}
+      NO_PROXY: ${NO_PROXY}
     volumes:
       - n8n_storage:/home/node/.n8n
       - ./n8n/demo-data:/demo-data
@@ -108,7 +128,7 @@ services:
       qdrant:
         condition: service_started
       crawl4ai:
-        condition: service_started
+        condition: service_healthy
       browserless:
         condition: service_started
       minio:
@@ -129,7 +149,6 @@ services:
       - qdrant_storage:/qdrant/storage
 
   ollama:
-    profiles: ["cpu", "gpu-nvidia", "gpu-amd"]
     image: ollama/ollama:latest
     container_name: ollama
     hostname: ollama
@@ -141,44 +160,7 @@ services:
     volumes:
       - ollama_storage:/root/.ollama
 
-  ollama-gpu:
-    profiles: ["gpu-nvidia"]
-    image: ollama/ollama:latest
-    container_name: ollama-gpu
-    hostname: ollama-gpu
-    restart: unless-stopped
-    networks:
-      - n8n_network
-    ports:
-      - "11435:11434"
-    volumes:
-      - ollama_storage:/root/.ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-
-  ollama-amd:
-    profiles: ["gpu-amd"]
-    image: ollama/ollama:rocm
-    container_name: ollama-amd
-    hostname: ollama-amd
-    restart: unless-stopped
-    networks:
-      - n8n_network
-    ports:
-      - "11436:11434"
-    volumes:
-      - ollama_storage:/root/.ollama
-    devices:
-      - /dev/kfd
-      - /dev/dri
-
   ollama-pull-llama:
-    profiles: ["cpu", "gpu-nvidia", "gpu-amd"]
     image: ollama/ollama:latest
     container_name: ollama-pull-llama
     hostname: ollama-pull-llama
@@ -243,9 +225,9 @@ services:
       CONCURRENT: 5
       TIMEOUT: 120000
       HEALTH: "true"
-      HTTP_PROXY: http://squid:3128
-      HTTPS_PROXY: http://squid:3128
-      NO_PROXY: localhost,127.0.0.1,n8n,postgres,ollama,qdrant,crawl4ai,browserless,minio,squid
+      HTTP_PROXY: ${HTTP_PROXY}
+      HTTPS_PROXY: ${HTTPS_PROXY}
+      NO_PROXY: ${NO_PROXY}
     depends_on:
       squid:
         condition: service_started

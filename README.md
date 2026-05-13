@@ -13,17 +13,29 @@ quickly get started with building self-hosted AI workflows.
 
 ### What’s included
 
-✅ [**Self-hosted n8n**](https://n8n.io/) - Low-code platform with over 400
-integrations and advanced AI components
+✅ [**Self-hosted n8n**](https://n8n.io/) - Low-code platform for workflow
+orchestration, automation, and AI-powered integrations.[page:5]
 
-✅ [**Ollama**](https://ollama.com/) - Cross-platform LLM platform to install
-and run the latest local LLMs
+✅ [**Ollama**](https://ollama.com/) - Local LLM runtime with profiles for CPU,
+Nvidia GPU, and AMD GPU deployments, plus a model-pull service for `llama3.2`.[page:5]
 
-✅ [**Qdrant**](https://qdrant.tech/) - Open-source, high performance vector
-store with an comprehensive API
+✅ [**Qdrant**](https://qdrant.tech/) - Open-source vector database for semantic
+search, embeddings, and retrieval workflows.[page:5]
 
-✅ [**PostgreSQL**](https://www.postgresql.org/) -  Workhorse of the Data
-Engineering world, handles large amounts of data safely.
+✅ [**PostgreSQL**](https://www.postgresql.org/) - Reliable relational database
+for persisting n8n data and workflow state.[page:5]
+
+✅ [**Crawl4AI**](https://github.com/unclecode/crawl4ai) - Web extraction and
+crawling engine for structured content collection in automation pipelines.[page:5]
+
+✅ [**Browserless**](https://www.browserless.io/) - Remote headless browser
+service for page rendering, automation, and JavaScript-heavy websites.[page:5]
+
+✅ [**MinIO**](https://min.io/) - S3-compatible object storage for files,
+artifacts, and workflow data.[page:5]
+
+✅ [**Cloudflared**](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) - Secure
+tunneling service for exposing local services when remote access is needed.[page:5]
 
 ### What you can build
 

@@ -157,19 +157,10 @@ services:
     depends_on:
       - ollama-gpu-amd
 
-  ngrok:
-    image: ngrok/ngrok:latest
-    hostname: ngrok
-    container_name: ngrok
-    networks: ["n8n_network"]
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared-tunnel
     restart: unless-stopped
-    environment:
-      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
-    command:
-      - http
-      - n8n:5678
-    depends_on:
-      n8n:
-        condition: service_started
-    ports:
-      - 4040:4040
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
+    networks:
+

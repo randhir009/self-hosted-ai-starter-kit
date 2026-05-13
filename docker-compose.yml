@@ -162,5 +162,5 @@ services:
     container_name: cloudflared-tunnel
     restart: unless-stopped
     command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
-    networks:
+    networks: ["n8n_network"]
 
